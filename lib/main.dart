@@ -27,12 +27,8 @@ class MyApp extends StatelessWidget {
     // use ChangeNotifierProvider.value when you reuse existing object(for example widgets when you loop through list of data)
     return MultiProvider(
         providers: [
-          //ChangeNotifierProvider.value(value: Auth(),),
           ChangeNotifierProvider(create: (ctx) => Auth()),
-          //ChangeNotifierProvider(create: (ctx) => Products()),
           ChangeNotifierProxyProvider<Auth, Products>(
-            //provider that depends on another provider
-            //require <1, 2> 1: class it depends on, 2: type of data will be provided
             create: (ctx) => Products('', '', []),
             update: (ctx, auth, previousProducts) => Products(
                 auth.token!,
@@ -40,7 +36,6 @@ class MyApp extends StatelessWidget {
                 previousProducts == null ? [] : previousProducts.items),
           ),
           ChangeNotifierProvider(create: (ctx) => Cart()),
-          //ChangeNotifierProvider(create: (ctx) => Orders()),
           ChangeNotifierProxyProvider<Auth, Orders>(
               create: (ctx) => Orders('', '', []),
               update: (ctx, auth, previousOrders) => Orders(
@@ -58,25 +53,24 @@ class MyApp extends StatelessWidget {
               fontFamily: 'Lato',
             ),
             home: auth.isAuth
-                ? ProductsOverviewScreen()
+                ? const ProductsOverviewScreen()
                 : FutureBuilder(
                     future: auth.tryAutoLogin(),
                     builder: (ctx, authResultSnapshot) =>
                         authResultSnapshot.connectionState ==
                                 ConnectionState.waiting
-                            ? SplashScreen()
-                            : AuthScreen(),
+                            ? const SplashScreen()
+                            : const AuthScreen(),
                   ),
             routes: {
               ProductDetailScreen.routeName: (ctx) =>
-                  checkAuth(ProductDetailScreen()),
-              CartScreen.routeName: (ctx) => checkAuth(CartScreen()),
-              OrdersScreen.routeName: (ctx) => checkAuth(OrdersScreen()),
+                  checkAuth(const ProductDetailScreen()),
+              CartScreen.routeName: (ctx) => checkAuth(const CartScreen()),
+              OrdersScreen.routeName: (ctx) => checkAuth(const OrdersScreen()),
               UserProductsScreen.routeName: (ctx) =>
                   checkAuth(const UserProductsScreen()),
               EditProductScreen.routeName: (ctx) =>
                   checkAuth(const EditProductScreen()),
-              //AuthScreen.routeName: (ctx) => AuthScreen(),
             },
           );
         }));
