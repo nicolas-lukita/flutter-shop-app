@@ -5,12 +5,10 @@ import 'package:provider/provider.dart';
 
 class ProductsGrid extends StatelessWidget {
   final bool showFavs;
-  ProductsGrid(this.showFavs);
+  const ProductsGrid(this.showFavs, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    //listening provider
-    //have to be child of parents that have set up  the ChangeNotifierProvider
     final productsData = Provider.of<Products>(context);
     final products = showFavs ? productsData.favoriteItems : productsData.items;
 
@@ -18,10 +16,7 @@ class ProductsGrid extends StatelessWidget {
       padding: const EdgeInsets.all(10),
       itemCount: products.length,
       itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
-        //ChangeNotifierProvider automatically cleans the old data from memory
-        child: ProductItem(
-            //products[i].id, products[i].title, products[i].imageUrl
-            ),
+        child: const ProductItem(),
         value: products[i],
       ),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(

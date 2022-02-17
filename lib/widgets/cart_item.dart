@@ -9,12 +9,14 @@ class CartItem extends StatelessWidget {
   final int quantity;
   final String title;
 
-  CartItem(
-      {required this.price,
+  const CartItem(
+      {Key? key,
+      required this.price,
       required this.quantity,
       required this.title,
       required this.id,
-      required this.productId});
+      required this.productId})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +50,7 @@ class CartItem extends StatelessWidget {
       direction: DismissDirection.endToStart,
       background: Container(
         color: Theme.of(context).errorColor,
-        child: Padding(
+        child: const Padding(
           padding: EdgeInsets.only(right: 15),
           child: Icon(
             Icons.delete,
@@ -57,17 +59,18 @@ class CartItem extends StatelessWidget {
           ),
         ),
         alignment: Alignment.centerRight,
-        margin: EdgeInsets.symmetric(horizontal: 15, vertical: 4),
+        margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 4),
       ),
       child: Card(
-        margin: EdgeInsets.symmetric(horizontal: 15, vertical: 4),
+        margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 4),
         child: Padding(
-          padding: EdgeInsets.all(8),
+          padding: const EdgeInsets.all(8),
           child: ListTile(
             leading: CircleAvatar(
               child: FittedBox(
                   child: Padding(
-                      padding: EdgeInsets.all(5), child: Text('\$$price'))),
+                      padding: const EdgeInsets.all(5),
+                      child: Text('\$$price'))),
             ),
             title: Text(title),
             subtitle: Text('Total: \$${(price * quantity).toStringAsFixed(2)}'),

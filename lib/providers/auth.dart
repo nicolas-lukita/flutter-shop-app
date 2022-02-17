@@ -16,9 +16,7 @@ class Auth with ChangeNotifier {
   }
 
   String? get token {
-    if (_expiryDate != null &&
-        _expiryDate.isAfter(DateTime.now()) &&
-        _token != '') {
+    if (_expiryDate.isAfter(DateTime.now()) && _token != '') {
       return _token;
     } else {
       return '';
@@ -73,7 +71,6 @@ class Auth with ChangeNotifier {
           }));
 
       final responseData = json.decode(response.body);
-      //print (responseData);
       if (responseData['error'] != null) {
         throw HttpException(responseData['error']['message']);
       }

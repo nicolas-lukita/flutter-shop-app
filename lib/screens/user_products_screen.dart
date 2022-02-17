@@ -18,9 +18,8 @@ class UserProductsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     print('rebuilding...');
-    //final productsData = Provider.of<Products>(context, listen: true);
     return Scaffold(
-      drawer: AppDrawer(),
+      drawer: const AppDrawer(),
       appBar: AppBar(
         title: const Text('My Products'),
         actions: [
@@ -30,14 +29,13 @@ class UserProductsScreen extends StatelessWidget {
                         arguments: 'noArgs')
                   },
               icon: const Icon(Icons.add)),
-          //....
         ],
       ),
       body: FutureBuilder(
         future: _refreshProducts(context),
         builder: (ctx, snapshot) => snapshot.connectionState ==
                 ConnectionState.waiting
-            ? Center(
+            ? const Center(
                 child: CircularProgressIndicator(),
               )
             : RefreshIndicator(

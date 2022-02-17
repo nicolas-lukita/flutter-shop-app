@@ -35,13 +35,8 @@ class _EditProductScreenState extends State<EditProductScreen> {
   };
   var _isLoading = false;
   var _isInit = true;
+  @override
   void didChangeDependencies() {
-    // if (ModalRoute.of(context)!.settings.arguments.runtimeType == bool) {
-    //   _isInit = false;
-    // } else {
-    //   _isInit = true;
-    // }
-
     if (_isInit) {
       final productId = ModalRoute.of(context)!.settings.arguments as String;
       if (productId != 'noArgs') {
@@ -52,7 +47,6 @@ class _EditProductScreenState extends State<EditProductScreen> {
           'title': _editedProduct.title,
           'description': _editedProduct.description,
           'price': _editedProduct.price.toString(),
-          //'imageUrl': _editedProduct.imageUrl,
           //!! IMPORTANT !!: if you use controller, you cannot set initial value, instead you set the controller as the initial value
           'imageUrl': '',
         };
@@ -63,6 +57,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
     super.didChangeDependencies();
   }
 
+  @override
   void dispose() {
     _imageUrlFocusNode.removeListener(
         _updateImageUrl); //remove listener first before removing focus node
@@ -92,18 +87,12 @@ class _EditProductScreenState extends State<EditProductScreen> {
     if (!isValid) {
       return; //if not valid, then it will not save the data
     }
-    _form.currentState!
-        .save(); //this will execute onSaved function on each of the textformfields
-    // print(_editedProduct.title);
-    // print(_editedProduct.description);
-    // print(_editedProduct.price);
-    // print(_editedProduct.imageUrl);
+    _form.currentState!.save();
     setState(() {
       _isLoading = true;
     });
     if (_editedProduct.id != '') {
-      await Provider.of<Products>(context,
-              listen: false) //await for edit update on database
+      await Provider.of<Products>(context, listen: false)
           .updateProduct(_editedProduct.id, _editedProduct);
     } else {
       try {
@@ -133,14 +122,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
       content: Text('Finished'),
       duration: Duration(seconds: 2),
-      // action: SnackBarAction(
-      //   label: 'Done',
-      //   onPressed: () {
-      //     Navigator.pop(context);
-      //   },
-      // ),
     ));
-    //Navigator.pop(context);
   }
 
   @override
@@ -163,10 +145,6 @@ class _EditProductScreenState extends State<EditProductScreen> {
               padding: const EdgeInsets.all(16.0),
               child: Form(
                 key: _form,
-
-                //can use listview but, input might be gone if it scrolled off the view because listview dynamically remove and rebuild widgets
-                //when they are scrolled in and out.
-                //alternatively, can use singleChildScrollView (with column as child) as it doesnt clear widgets that scrolls out of view
                 child: ListView(
                   children: <Widget>[
                     TextFormField(
@@ -177,7 +155,6 @@ class _EditProductScreenState extends State<EditProductScreen> {
                       textInputAction: TextInputAction.next,
                       onFieldSubmitted: (_) {
                         FocusScope.of(context).requestFocus(_priceFocusNode);
-                        //when the next(enter) button is pressed, focus will go to _priceFocusNode field
                       },
                       onSaved: (value) {
                         _editedProduct = Product(
@@ -220,7 +197,6 @@ class _EditProductScreenState extends State<EditProductScreen> {
                           return 'Please enter a price';
                         }
                         if (double.tryParse(value) == null) {
-                          //try parse returns null if it fails
                           return 'Please enter a valid number';
                         }
                         if (double.parse(value.toString()) <= 0) {
@@ -308,13 +284,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                               if (!value.startsWith('http') &&
                                   !value.startsWith('https')) {
                                 return 'Please enter a valid URL';
-                              }
-                              // if (!value.endsWith('.png') &&
-                              //     !value.endsWith('.jpg') &&
-                              //     !value.endsWith('.jpeg')) {
-                              //   return 'Please enter a valid image URL';
-                              // }
-                              else {
+                              } else {
                                 return null;
                               }
                             },

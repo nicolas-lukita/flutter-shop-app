@@ -6,7 +6,7 @@ import 'dart:math';
 class OrderItem extends StatefulWidget {
   final ord.OrderItem order;
 
-  OrderItem(this.order);
+  const OrderItem({Key? key, required this.order}) : super(key: key);
 
   @override
   State<OrderItem> createState() => _OrderItemState();
@@ -36,7 +36,7 @@ class _OrderItemState extends State<OrderItem> {
           ),
           if (_expanded)
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 4),
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 4),
               height: min(widget.order.products.length * 20.0 + 10, 100),
               child: ListView(
                 children: widget.order.products
@@ -45,15 +45,15 @@ class _OrderItemState extends State<OrderItem> {
                           children: <Widget>[
                             Text(
                               prod.title,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
                             Text(
                               '${prod.quantity} x \$${prod.price}',
-                              style:
-                                  TextStyle(fontSize: 18, color: Colors.grey),
+                              style: const TextStyle(
+                                  fontSize: 18, color: Colors.grey),
                             )
                           ],
                         ))

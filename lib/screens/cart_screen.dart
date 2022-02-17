@@ -7,6 +7,8 @@ import '../providers/orders.dart';
 class CartScreen extends StatelessWidget {
   static const routeName = '/cart-screen';
 
+  const CartScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final cart = Provider.of<Cart>(context, listen: true);
@@ -33,7 +35,7 @@ class CartScreen extends StatelessWidget {
                   Chip(
                     label: Text(
                       '\$${cart.TotalAmount.toStringAsFixed(2)}',
-                      style: TextStyle(color: Colors.white),
+                      style: const TextStyle(color: Colors.white),
                     ),
                     backgroundColor: Theme.of(context).primaryColor,
                   ),
@@ -42,7 +44,7 @@ class CartScreen extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           Expanded(
